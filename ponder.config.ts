@@ -1,18 +1,25 @@
-import { createConfig } from "@ponder/core";
-import { http } from "viem";
+import { createConfig, loadBalance } from '@ponder/core'
+import { http } from 'viem'
 
-import { BBitsCheckInAbi } from "./abis/BBitsCheckInAbi";
+import { BBitsCheckInAbi } from './abis/BBitsCheckInAbi'
 
 export default createConfig({
   networks: {
-    base: { chainId: 8453, transport: http(process.env.PONDER_RPC_URL_8453) },
+    base: {
+      chainId: 8453,
+      transport: loadBalance([
+        http('https://1rpc.io/base'),
+        http('https://base.drpc.org'),
+        http('https://mainnet.base.org'),
+      ]),
+    },
   },
   contracts: {
     BBitsCheckIn: {
       abi: BBitsCheckInAbi,
-      address: "0xe842537260634175891925f058498f9099c102eb",
-      network: "base",
+      address: '0xe842537260634175891925f058498f9099c102eb',
+      network: 'base',
       startBlock: 14163892,
     },
   },
-});
+})

@@ -1,8 +1,17 @@
-import { createSchema } from "@ponder/core";
+import { createSchema } from '@ponder/core'
 
 export default createSchema((p) => ({
-  Example: p.createTable({
-    id: p.string(),
-    name: p.string().optional(),
+  Account: p.createTable({
+    id: p.hex(),
+    streak: p.int(),
+    count: p.int(),
+    latestCheckIn: p.bigint(),
+    checkIns: p.many('CheckIn.address'),
   }),
-}));
+
+  CheckIn: p.createTable({
+    id: p.string(),
+    address: p.hex().references('Account.id'),
+    timestamp: p.bigint(),
+  }),
+}))
