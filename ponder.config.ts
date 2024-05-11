@@ -8,7 +8,6 @@ export default createConfig({
     base: {
       chainId: 8453,
       transport: loadBalance([
-        http('https://1rpc.io/base'),
         http('https://base.drpc.org'),
         http('https://mainnet.base.org'),
       ]),
